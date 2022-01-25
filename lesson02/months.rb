@@ -13,7 +13,5 @@ months = {
   декабрь: 31 }
 
 months.each do |month, days|
-  if days == 30
-    puts "#{month}"
-  end
+  puts "#{month}" if days == 30
 end

@@ -1,7 +1,1 @@
-numbers = []
-
-(10..100).each do |number|
-  if number % 5 == 0
-    numbers << number
-  end
-end
+numbers = (10..100).step(5).to_a

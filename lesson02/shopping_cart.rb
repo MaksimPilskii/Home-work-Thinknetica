@@ -21,7 +21,7 @@ loop do
 
   puts "Введите количество товаров"
   quanity = gets.to_f
-  
+
   shopping_cart[title] = {price: price, quanity: quanity}
 end
 

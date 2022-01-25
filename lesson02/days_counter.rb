@@ -16,9 +16,7 @@ elsif year % 100 == 0 && year % 400 == 0
   leap_year = true
 end
 
-for i in (0..month - 2)
-  days_counter += months[i]
-end
+days_counter += months.take(month - 1).sum
 
 if leap_year == true && month > 2
   days_counter += 1
