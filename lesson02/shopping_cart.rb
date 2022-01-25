@@ -7,7 +7,7 @@ if (Gem.win_platform?)
   end
 end
 
-shopping_cart = Hash.new 
+shopping_cart = {} 
 result = 0
 
 loop do
