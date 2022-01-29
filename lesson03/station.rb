@@ -18,9 +18,7 @@ class Station
     @trains.length
   end
 
-  def number_type_trains
-    puts "Пассажирских поездов: #{@trains.select { |type| type = "passenger"}.length}" 
-    puts "Грузовых поездов: #{@trains.select { |type| type = "cargo"}.length}"
+  def trains_type(type)
+    @trains.count(type)
   end
-
 end

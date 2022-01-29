@@ -2,13 +2,14 @@ require './station'
 require './route'
 
 class Train
-  attr_accessor :number, :type, :number_wagon, :speed, :route
+  attr_accessor :number, :type, :number_wagon, :speed, :route, :station, :trains 
+  attr_reader :current_station
 
   def initialize(number, type, number_wagons)
     @number = number
     @type = type
     @number_wagon = number_wagons
-    @speed = speed
+    @speed = 0
   end
 
   def acceleration(speed)
@@ -35,31 +36,28 @@ class Train
     @number_wagon -= 1 if @speed == 0
   end
 
-  def get_station
+  def get_station(route)
+    @route = route
     @current_station = route.first_station
   end
 
-  def next_station
-    @current_station = @route.whole_route[index_station + 1] if @current_station != route.last_station
+  def move_to_next_station
+    @current_station = @route.whole_route[station_index + 1] unless next_station
   end
 
-  def previous_station
-    @current_station = @route.whole_route[index_station - 1] if @current_station != route.first_station
+  def move_to_previous_station
+    @current_station = @route.whole_route[station_index - 1] unless route.first_station
   end
 
-  def index_station
+  def station_index
     @route.whole_route.index(@current_station)
   end
 
-  def show_station
-    @current_station
+  def next_station
+    @route.whole_route[station_index + 1] unless route.last_station
   end
 
-  def show_next_station
-    @route.whole_route[index_station + 1] if @current_station != route.last_station
-  end
-
-  def show_previous_station
-    @route.whole_route[index_station - 1] if @current_station != route.first_station
+  def previous_station
+    @route.whole_route[station_index - 1] unless route.first_station
   end
 end
