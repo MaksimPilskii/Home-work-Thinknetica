@@ -42,11 +42,11 @@ class Train
   end
 
   def move_to_next_station
-    @current_station = @route.whole_route[station_index + 1] if @current_station != route.last_station
+    @current_station = next_station if next_station
   end
 
   def move_to_previous_station
-    @current_station = @route.whole_route[station_index - 1] if @current_station != route.first_station
+    @current_station = previous_station if previous_station
   end
 
   def station_index
@@ -54,10 +54,10 @@ class Train
   end
 
   def next_station
-    @route.whole_route[station_index + 1]
+    @route.whole_route[station_index + 1] if @current_station != route.last_station
   end
 
   def previous_station
-    @route.whole_route[station_index - 1]
+    @route.whole_route[station_index - 1] if @current_station != route.first_station
   end
 end

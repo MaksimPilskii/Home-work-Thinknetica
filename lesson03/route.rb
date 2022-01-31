@@ -8,7 +8,7 @@ class Route
   end
 
   def add_station(station)
-    @intermediate_stations << station unless @intermediate_stations.include?(station)
+    @intermediate_stations << station unless whole_route.include?(station)
   end
 
   def delete_station(station)
@@ -19,10 +19,3 @@ class Route
     [@first_station, *@intermediate_stations, @last_station]
   end
 end
-
-route = Route.new('Ква', 'Не ква')
-p route
-
-route.add_station('Ква')
-route.add_station('Ква')
-p route
