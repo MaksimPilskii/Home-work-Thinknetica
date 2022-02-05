@@ -5,6 +5,7 @@ class Station
   def initialize(name)
     @name = name
     @trains = []
+    @all_station = []
   end
 
   def arrival_trains(train)

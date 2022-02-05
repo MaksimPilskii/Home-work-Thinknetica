@@ -21,11 +21,11 @@ class Train
   end
 
   def attach_wagon(wagon)
-    @wagons_trains << wagon.number_wagon if @type == wagon.type_wagon
+    @wagons_trains << wagon.number if @type == wagon.type
   end
 
   def remove_wagon(number_wagon)
-    @wagons_trains.delete(number_wagon)
+    @wagons_trains.delete(number_wagon) 
   end
 
   def get_station(route)
