@@ -7,10 +7,10 @@ class Route
     @intermediate_stations = []
   end
 
-  def add_station(station)
+  def add_intermediate_station(station)
     @intermediate_stations << station unless whole_route.include?(station)
   end
-
+  
   def delete_station(station)
     @intermediate_stations.delete(station) 
   end

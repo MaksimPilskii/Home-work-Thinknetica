@@ -1,5 +1,5 @@
 class Train
-  attr_accessor :number, :speed, :route, :station, :trains, :wagons_trains
+  attr_accessor :number, :speed, :route, :station, :trains, :wagons_trains, :wagons
   attr_reader :current_station
 
   def initialize(number)
@@ -24,8 +24,8 @@ class Train
     @wagons_trains << wagon.number if @type == wagon.type
   end
 
-  def remove_wagon(number_wagon)
-    @wagons_trains.delete(number_wagon) 
+  def remove_wagon(wagon_selection)
+    @wagons_trains.delete_at(wagon_selection)
   end
 
   def get_station(route)
@@ -54,5 +54,10 @@ private
 
   def previous_station
     @route.whole_route[station_index - 1] if @current_station != route.first_station
+  end
+
+  def add_wagon_to_train(train_selection, wagon_selection)
+    @trains[train_selection].attach_wagon(@wagons[wagon_selection])
+    @wagons.delete_at(wagon_selection)
   end
 end
