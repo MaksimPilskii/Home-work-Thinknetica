@@ -288,27 +288,27 @@ private
     puts "Введите конечную станцию"
     last_station = gets.chomp
     
-    @route = Route.new(first_station, last_station)
+    route = Route.new(first_station, last_station)
           
-    puts "создали маршрут: #{@route.whole_route}"
-    @routes << @route
+    puts "создали маршрут: #{route.whole_route}"
+    @routes << route
   end
 
   def add_a_station_to_a_route
     puts "Укажите название станции, которую нужно добавить к маршруту"
-    @station = gets.chomp
+    station = gets.chomp
   
-    @route.add_intermediate_station(@station)
-    puts "Вы добавили к маршруту станцию #{@station}"
+    route.add_intermediate_station(station)
+    puts "Вы добавили к маршруту станцию #{station}"
   end
 
   def delete_a_station_a_route 
     puts "Станции: "
-    puts "#{@route.whole_route}"
+    puts "#{route.whole_route}"
     
     puts "Укажите название станции, которую нужно удалить из маршрута"
-    @station = gets.chomp
+    station = gets.chomp
       
-    puts "#{@station} была удалена из маршрута" if @route.delete_station(@station)
+    puts "#{station} была удалена из маршрута" if route.delete_station(station)
   end
 end
