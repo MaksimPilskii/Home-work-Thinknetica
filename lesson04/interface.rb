@@ -7,89 +7,110 @@ attr_accessor :stations, :route, :trains, :wagons, :station
     @wagons = []
     @trains = []
   end
+  
+  def run
+    choice = ""
 
-  def menu_begin
-    puts "Выбери нужное вам действие:"
-    puts "Нажмите 1, если хотите выполнить действия со станцией"
-    puts "Нажмите 2, если хотите выполнить действия с поездами и вагонами"
-    puts "Нажмите 3, если хотите выполнить действия с маршрутом"
-    puts "Нажмите 0, если хотите выйти из программы"
-  end
+    while choice != "0" 
+      
+    menu_begin
+      
+    choice = gets.chomp
 
-  def menu_stations
-    puts "1. Создать станцию"
-    puts "2. Прибытие поезда на станцию"
-    puts "3. Убытие поезда со станции"
-    puts "4. Просмотреть список станций и поездов на станции"
-
-    menu = gets.chomp
-
-    case menu
+    case choice
     when "1"
-      add_station
+      menu_stations
     when "2"
-      arrival_of_the_train_at_the_station
+      menu_trains
     when "3"
-      departure_of_the_train_from_the_station
-    when "4"
-      list_stations_with_trains
+      menu_route
+    end
     end
   end
-
-  def menu_trains
-    puts "1. Создать почтовый поезд"
-    puts "2. Создать пассажирский поезд"
-    puts "3. Создать почтовый вагон"
-    puts "4. Создать пассажирский вагон"
-    puts "5. Добавить вагон к поезду"
-    puts "6. Отцепить вагон от поезда"
-
-    menu = gets.chomp
-
-    case menu
-    when "1"
-      create_cargo_train
-    when "2"
-      create_passenger_train
-    when "3"
-      create_cargo_wagon
-    when "4"
-      create_passenger_wagon
-    when "5"
-      attach_the_wagon_to_the_train
-    when "6"
-      unhook_the_wagon_from_the_train
-    end
-  end
-
-  def menu_route 
-    puts "1. Создать маршрут"
-    puts "2. Добавить станцию"
-    puts "3. Удалить станцию"
-    puts "4. Назначить маршрут поезду"
-    puts "5. Переместить поезд по маршрут вперед"
-    puts "6. Переместить поезд по маршруту назад"
-    
-    menu = gets.chomp
-    
-    case menu
-    when "1"
-      add_route
-    when "2"
-      add_a_station_to_a_route
-    when "3"
-      delete_a_station_a_route
-    when "4"
-      assign_a_route
-    when "5"
-      move_train_to_next_station
-    when "6"
-      move_train_to_previous_station
-    end
-  end
-
+ 
 private
   
+def menu_begin
+  puts "Выбери нужное вам действие:"
+  puts "Нажмите 1, если хотите выполнить действия со станцией"
+  puts "Нажмите 2, если хотите выполнить действия с поездами и вагонами"
+  puts "Нажмите 3, если хотите выполнить действия с маршрутом"
+  puts "Нажмите 0, если хотите выйти из программы"
+end
+
+def menu_stations
+  puts "1. Создать станцию"
+  puts "2. Прибытие поезда на станцию"
+  puts "3. Убытие поезда со станции"
+  puts "4. Просмотреть список станций и поездов на станции"
+
+  menu = gets.chomp
+
+  case menu
+  when "1"
+    add_station
+  when "2"
+    arrival_of_the_train_at_the_station
+  when "3"
+    departure_of_the_train_from_the_station
+  when "4"
+    list_stations_with_trains
+  end
+end
+
+def menu_trains
+  puts "1. Создать почтовый поезд"
+  puts "2. Создать пассажирский поезд"
+  puts "3. Создать почтовый вагон"
+  puts "4. Создать пассажирский вагон"
+  puts "5. Добавить вагон к поезду"
+  puts "6. Отцепить вагон от поезда"
+
+  menu = gets.chomp
+
+  case menu
+  when "1"
+    create_cargo_train
+  when "2"
+    create_passenger_train
+  when "3"
+    create_cargo_wagon
+  when "4"
+    create_passenger_wagon
+  when "5"
+    attach_the_wagon_to_the_train
+  when "6"
+    unhook_the_wagon_from_the_train
+  end
+end
+
+def menu_route 
+  puts "1. Создать маршрут"
+  puts "2. Добавить станцию"
+  puts "3. Удалить станцию"
+  puts "4. Назначить маршрут поезду"
+  puts "5. Переместить поезд по маршрут вперед"
+  puts "6. Переместить поезд по маршруту назад"
+  
+  menu = gets.chomp
+  
+  case menu
+  when "1"
+    add_route
+  when "2"
+    add_a_station_to_a_route
+  when "3"
+    delete_a_station_a_route
+  when "4"
+    assign_a_route
+  when "5"
+    move_train_to_next_station
+  when "6"
+    move_train_to_previous_station
+  end
+end
+
+
   def move_train_to_next_station
     list_trains_with_route
 
