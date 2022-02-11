@@ -1,11 +1,5 @@
 module CompanyName
-  def set_the_company_name(name)
-    @company_name = name
-  end
-
-  def get_the_company_name
-    @company_name
-  end
+  attr_accessor :company_name
 end
 
 module InstanceCounter 
@@ -13,21 +7,19 @@ module InstanceCounter
     base.extend ClassMethods
     base.send :include, InstanceMethods
   end
-
+  
   module ClassMethods
-    attr_accessor :instance
-    
-    def self.instance 
-      @instances
+    attr_accessor :instances
+
+    def self.instances
+      @instances ||= 0
     end
   end
   
-protected
-
   module InstanceMethods
-    def counting_instances
-      self.class.instance ||= 0
-      self.class.instance += 1
+    
+    def count_instances
+      self.class.instances += 1
     end
   end
 end
