@@ -11,13 +11,14 @@ module InstanceCounter
   module ClassMethods
     attr_accessor :instances
 
-    def self.instances
+    def instances
       @instances ||= 0
     end
   end
   
   module InstanceMethods
-    
+  
+  private
     def count_instances
       self.class.instances += 1
     end

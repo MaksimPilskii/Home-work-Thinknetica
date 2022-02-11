@@ -9,6 +9,7 @@ class Train
     @number = number
     @wagons_trains = []
     @speed = 0
+    self.class.all << self
   end
 
   def acceleration(speed)
@@ -48,8 +49,12 @@ class Train
     @route.whole_route.index(@current_station)
   end
 
+  def self.all
+    @all_trains ||= []
+  end
+
   def self.find(number)
-    ObjectSpace.each_object(Train).to_a.select { |train| train.number == number}
+    @all_trains.select { |train| train.number == number}
   end
 
 private
