@@ -2,14 +2,14 @@ require './modules'
 
 class Train
   include CompanyName
-  attr_accessor :number, :speed, :route, :station, :trains, :wagons_trains, :wagons
+  attr_accessor :number, :speed, :route, :station, :trains, :wagons_trains, :wagons, :type
   attr_reader :current_station
 
   def initialize(number)
     @number = number
-    validate!
     @wagons_trains = []
     @speed = 0
+    validate!
     self.class.all << self
   end
 
@@ -38,7 +38,7 @@ class Train
   end
 
   def attach_wagon(wagon)
-    @wagons_trains << wagon.number if @type == wagon.type
+    @wagons_trains << wagon if @type == wagon.type
   end
 
   def remove_wagon(wagon_selection)
@@ -63,11 +63,16 @@ class Train
   end
 
   def self.all
-    @all_trains ||= []
+    @@all_trains ||= []
   end
 
   def self.find(number)
-    @all_trains.select { |train| train.number == number }
+    @@all_trains.select { |train| train.number == number }
+  end
+
+  def show_wagons_on_trains(train, block)
+    puts "В поезде номер #{train.number}, тип #{train.type}, количество вагонов: #{train.wagons_trains.count} со следующими номерами: "
+    block.call(train.wagons_trains)
   end
 
   private

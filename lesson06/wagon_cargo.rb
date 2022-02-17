@@ -3,7 +3,7 @@ class CargoWagon < Wagon
 
   def initialize(number)
     @number = number
-    @type = "Cargo"
+    @type = 'Cargo'
     super
   end
 end

@@ -42,4 +42,8 @@ class Station
   def self.all
     @all_station ||= []
   end
+
+  def show_trains_on_station(station, block)
+    block.call(station.trains)
+  end
 end
