@@ -70,9 +70,8 @@ class Train
     @@all_trains.select { |train| train.number == number }
   end
 
-  def show_wagons_on_trains(train, block)
-    puts "В поезде номер #{train.number}, тип #{train.type}, количество вагонов: #{train.wagons_trains.count} со следующими номерами: "
-    block.call(train.wagons_trains)
+  def self.show_wagons_on_trains(block)
+    block.call(@@all_trains)
   end
 
   private

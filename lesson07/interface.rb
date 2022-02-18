@@ -71,7 +71,7 @@ class Interface
     puts '4. Создать пассажирский вагон'
     puts '5. Добавить вагон к поезду'
     puts '6. Отцепить вагон от поезда'
-    puts '7. Посмотреть вагоны у поезда'
+    puts '7. Посмотреть вагоны у поездов'
 
     menu = gets.chomp
 
@@ -175,7 +175,7 @@ class Interface
   def list_trains_on_stations
     block = lambda do |trains|
       trains.each do |train|
-        print "Поезд с номером #{train.number} "
+        puts " поезд с номером #{train.number} "
         train.wagons_trains.each do |wagon|
           if wagon.type == 'Passenger'
             print "с вагоном номер: #{wagon.number}, кол-во свободных мест: #{wagon.available_seats}, кол-во занятых мест: #{wagon.occupied_places}"
@@ -192,7 +192,10 @@ class Interface
     select_station = gets.to_i - 1
 
     station = Station.all[select_station]
-    station.show_trains_on_station(station, block)
+
+    print "На станции #{station.name} находятся следующие поезда:"
+
+    Station.show_trains_on_station(station, block)
   end
 
   def take_up_volume_or_space
@@ -201,7 +204,6 @@ class Interface
     puts 'Выберите вагон в котором хотите занять место или объем'
     select_wagon = gets.to_i - 1
 
-    p wagons[select_wagon].type
     if wagons[select_wagon].type == 'Passenger'
        wagons[select_wagon].take_a_seat
     else
@@ -299,19 +301,12 @@ class Interface
   end
 
   def show_wagons
-    block = lambda do |wagons|
-      wagons.each do |wagon|
-        puts wagon.number.to_s
+    block = lambda do |train|
+      trains.each do |train|
+        puts "Номер поезда: #{train.number}, тип: #{train.type}, количество вагонов: #{train.wagons_trains.count}" 
       end
     end
-
-    list_of_trains
-
-    puts 'Выберите поезд у которого вы хотите посмотреть вагоны'
-    select_train = gets.to_i - 1
-
-    train = Train.all[select_train]
-    train.show_wagons_on_trains(train, block)
+    Train.show_wagons_on_trains(block)
   end
 
   # методы третьего меню
