@@ -1,3 +1,11 @@
+if (Gem.win_platform?)
+  Encoding.default_external = Encoding.find(Encoding.locale_charmap)
+  Encoding.default_internal = __ENCODING__
+
+  [STDIN, STDOUT].each do |io|
+    io.set_encoding(Encoding.default_external, Encoding.default_internal)
+  end
+end
 class Interface
   attr_accessor :stations, :route, :trains, :wagons, :station
 
@@ -302,11 +310,17 @@ class Interface
 
   def show_wagons
     block = lambda do |train|
-      trains.each do |train|
-        puts "Номер поезда: #{train.number}, тип: #{train.type}, количество вагонов: #{train.wagons_trains.count}" 
-      end
+      puts "Номер поезда: #{train.number}, тип: #{train.type}, количество вагонов: #{train.wagons_trains.count}" 
     end
-    Train.show_wagons_on_trains(block)
+
+    list_of_trains
+
+    puts "Выберите поезд, вагоны, которого вы хотите посмотреть"
+    train_select = gets.to_i - 1
+
+    train = Train.all[train_select]
+
+    Train.show_wagons_on_trains(train_select, block)
   end
 
   # методы третьего меню

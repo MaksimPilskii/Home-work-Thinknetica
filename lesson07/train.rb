@@ -70,8 +70,8 @@ class Train
     @@all_trains.select { |train| train.number == number }
   end
 
-  def self.show_wagons_on_trains(block)
-    block.call(@@all_trains)
+  def self.show_wagons_on_trains(train, block)
+    block.call(@@all_trains[train])
   end
 
   private
