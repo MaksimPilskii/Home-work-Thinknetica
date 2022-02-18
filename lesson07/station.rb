@@ -43,7 +43,7 @@ class Station
     @all_station ||= []
   end
 
-  def self.show_trains_on_station(station, block)
-    block.call(station.trains)
+  def each_train(block)
+    @trains.each { |train| block.call(train) }
   end
 end

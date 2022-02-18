@@ -70,8 +70,8 @@ class Train
     @@all_trains.select { |train| train.number == number }
   end
 
-  def self.show_wagons_on_trains(train, block)
-    block.call(@@all_trains[train])
+  def each_wagon(block)
+    @wagons_trains.each { |wagon| block.call(wagon) }
   end
 
   private
@@ -86,6 +86,5 @@ class Train
 
   def add_wagon_to_train(train_selection, wagon_selection)
     @trains[train_selection].attach_wagon(@wagons[wagon_selection])
-    @wagons.delete_at(wagon_selection)
   end
 end

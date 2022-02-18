@@ -1,3 +1,4 @@
+class Interface
   attr_accessor :stations, :route, :trains, :wagons, :station
 
   def initialize
@@ -42,8 +43,7 @@
     puts '2. Прибытие поезда на станцию'
     puts '3. Убытие поезда со станции'
     puts '4. Просмотреть список станций и поездов на станции'
-    puts '5. Посмотреть список поездов на определенной станции'
-    puts '6. Занять объем или место в вагоне'
+    puts '5. Занять объем или место в вагоне'
 
     menu = gets.chomp
 
@@ -55,10 +55,8 @@
     when '3'
       departure_of_the_train_from_the_station
     when '4'
-      list_stations_with_trains
+      show_trains_on_stations
     when '5'
-      list_trains_on_stations
-    when '6'
       take_up_volume_or_space
     end
   end
@@ -70,7 +68,7 @@
     puts '4. Создать пассажирский вагон'
     puts '5. Добавить вагон к поезду'
     puts '6. Отцепить вагон от поезда'
-    puts '7. Посмотреть вагоны у поездов'
+    puts '7. Список вагонов у поезда'
 
     menu = gets.chomp
 
@@ -159,44 +157,6 @@
     puts "#{@trains[train_selection].number} убыл со станции #{@stations[station_selection].name}"
   end
 
-  def list_stations_with_trains
-    block = @stations.each do |station|
-      print "На станции #{station.name} стоят следующие поезда: "
-      unless station.trains.nil?
-        station.trains.each do |train|
-          print ": #{train.number}, тип поезда: #{train.type}, количество вагонов #{train.wagons_trains.count}"
-        end
-      end
-      puts
-    end
-  end
-
-  def list_trains_on_stations
-    block = lambda do |trains|
-      trains.each do |train|
-        puts " поезд с номером #{train.number} "
-        train.wagons_trains.each do |wagon|
-          if wagon.type == 'Passenger'
-            print "с вагоном номер: #{wagon.number}, кол-во свободных мест: #{wagon.available_seats}, кол-во занятых мест: #{wagon.occupied_places}"
-            puts
-          else
-            print "с вагоном номер: #{wagon.number}, свободный объем: #{wagon.get_free_volume}, занятный объем: #{wagon.get_the_occupied_volume}"
-            puts
-          end
-        end
-      end
-    end
-
-    list_of_stations
-    select_station = gets.to_i - 1
-
-    station = Station.all[select_station]
-
-    print "На станции #{station.name} находятся следующие поезда:"
-
-    Station.show_trains_on_station(station, block)
-  end
-
   def take_up_volume_or_space
     list_of_wagons
 
@@ -211,6 +171,19 @@
 
       wagons[select_wagon].occupy_volume(selected_volume)
     end
+  end
+
+  def show_trains_on_stations
+    list_of_stations
+
+    puts "Укажите станцию, на которой вы хотите посмотреть поезда"
+    select_station = gets.to_i - 1
+    
+    block = lambda do |train|
+      puts "номер поезда #{train.number}, тип: #{train.type}, количество вагонов: #{train.wagons_trains.count}"
+    end
+
+    @stations[select_station].each_train(block)
   end
 
   # методы второго меню
@@ -300,18 +273,22 @@
   end
 
   def show_wagons
-    block = lambda do |train|
-      puts "Номер поезда: #{train.number}, тип: #{train.type}, количество вагонов: #{train.wagons_trains.count}" 
+    block = lambda do |wagon|
+      if wagon.type == 'Passenger'
+        print "Вагон с номером: #{wagon.number}, кол-во свободных мест: #{wagon.available_seats}, кол-во занятых мест: #{wagon.occupied_places}"
+        puts
+      else
+        print "Вагон с номером: #{wagon.number}, свободный объем: #{wagon.get_free_volume}, занятный объем: #{wagon.get_the_occupied_volume}"
+        puts
+      end
     end
-
+    
     list_of_trains
 
-    puts "Выберите поезд, вагоны, которого вы хотите посмотреть"
-    train_select = gets.to_i - 1
+    puts "Выберите поезд у которого хотите посмотреть вагоны "
+    select_train = gets.to_i - 1
 
-    train = Train.all[train_select]
-
-    Train.show_wagons_on_trains(train_select, block)
+    @trains[select_train].each_wagon(block)
   end
 
   # методы третьего меню
