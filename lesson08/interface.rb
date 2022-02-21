@@ -277,9 +277,11 @@ class Interface
   def show_wagons
     block = lambda do |wagon|
       if wagon.type == 'Passenger'
-        print "Вагон с номером: #{wagon.number}, кол-во свободных мест: #{wagon.available_seats}, кол-во занятых мест: #{wagon.occupied_places}"
+        print "Вагон с номером: #{wagon.number}, кол-во свободных мест: " \
+        "#{wagon.available_seats}, кол-во занятых мест: #{wagon.occupied_places}"
       else
-        print "Вагон с номером: #{wagon.number}, свободный объем: #{wagon.free_volume}, занятный объем: #{wagon.the_occupied_volume}"
+        print "Вагон с номером: #{wagon.number}, свободный объем:" \
+        " #{wagon.free_volume}, занятный объем: #{wagon.the_occupied_volume}"
       end
       puts
     end
